@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PERINGATAN SISTEM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            position: fixed;
+            top: 0; left: 0;
+        }
+        .layar-penuh {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 4px solid #ff0000;
+            box-shadow: 0 0 40px #ff0000, inset 0 0 60px rgba(255,0,0,0.2);
+        }
+        h1 {
+            text-transform: uppercase;
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #ff0000;
+            animation: kedip 1s infinite;
+        }
+        @keyframes kedip {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .teks {
+            color: #ff6666;
+            text-align: center;
+            line-height: 1.8;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        .kotak-kode {
+            background: #1a0000;
+            border: 2px dashed #ff0000;
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 350px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffff00;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 20px;
+            text-align: center;
+            background: #000;
+            color: #0f0;
+            border: 2px solid #ff0000;
+            outline: none;
+            letter-spacing: 5px;
+        }
+        .tombol {
+            width: 100%;
+            max-width: 350px;
+            padding: 14px;
+            margin-top: 15px;
+            background: #330000;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tombol:hover {
+            background: #ff0000;
+            color: #000;
+        }
+        .salah {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
+        }
+        .petunjuk {
+            margin-top: 20px;
+            color: #555;
+            font-size: 12px;
+            text-align: center;
+        }
+        .kunci-benar {
+            display: none;
+            color: #0f0;
+            text-align: center;
+        }
+        .id-perangkat {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="layar-penuh" id="layarKunci">
+        <h1>⚠ PERANGKAT DIKUNCI ⚠</h1>
+        <div class="id-perangkat">
+            ID Perangkat: 8XZ-772-KF9<br>
+            Waktu: <span id="waktuSekarang"></span>
+        </div>
+        <p class="teks">
+            Akses ke sistem telah dibatasi.<br>
+            Masukkan kode buka kunci untuk mengembalikan akses ke perangkat Anda.
+        </p>
+        <div class="kotak-kode">
+            <label>MASUKKAN KODE BUKA KUNCI:</label>
+            <input type="text" id="inputKode" placeholder="_______" maxlength="10" autocomplete="off">
+            <p class="salah" id="pesanSalah">❌ Kode salah, coba lagi!</p>
+        </div>
+        <button class="tombol" onclick="cekKode()">KIRIM & BUKA KUNCI</button>
+        
+        <div class="petunjuk">
+            💡 Kode yang benar: <b>buka123</b> (ini simulasi saja)<br>
+            Tidak ada data yang dikunci atau dihapus.
+        </div>
+    </div>
+
+    <div class="kunci-benar" id="layarBuka">
+        <h1 style="color:#0f0; text-shadow:0 0 15px #0f0;">✅ PERANGKAT SUDAH DIBUKA ✅</h1>
+        <p style="font-size:18px; margin:20px 0;">
+            Akses telah dikembalikan.<br>
+            Terima kasih.
+        </p>
+        <p style="color:#666; font-size:13px; margin-top:30px;">
+            Ini adalah tampilan simulasi untuk keperluan pembelajaran & hiburan.<br>
+            Tidak ada kerusakan pada perangkat Anda.
+        </p>
+    </div>
+
+    <script>
+        // Tampilkan waktu sekarang
+        document.getElementById('waktuSekarang').innerText = new Date().toLocaleString('id-ID');
+
+        // Kode yang benar
+        const KODE_BENAR = 'buka123';
+
+        function cekKode() {
+            const input = document.getElementById('inputKode').value.trim().toLowerCase();
+            if (input === KODE_BENAR) {
+                // Benar: ganti layar
+                document.getElementById('layarKunci').style.display = 'none';
+                document.getElementById('layarBuka').style.display = 'block';
+                document.body.style.background = '#050';
+            } else {
+                // Salah: tampilkan pesan
+                document.getElementById('pesanSalah').style.display = 'block';
+                document.getElementById('inputKode').value = '';
+                document.getElementById('inputKode').focus();
+            }
+        }
+
+        // Tekan Enter untuk kirim
+        document.getElementById('inputKode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') cekKode();
+        });
+    </script>
+</body>
+</html>
